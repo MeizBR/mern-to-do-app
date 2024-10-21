@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: meiezbr/mern-to-do-app-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: MONGODB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-host
+
+        - name: MONGODB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-configmap
+              key: mongo-database
+
+        - name: MONGODB_USER
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-username
+
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+
+        - name: GMAIL_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: gmail-username
+
+        - name: GMAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: gmail-password
+
+        - name: JWT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: mongodb-configmap
+              key: jwt-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pfa-backend-service
+spec:
+  selector:
+    app: backend
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30001

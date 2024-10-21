@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pfa-frontend-app
+  labels:
+    app: pfa-frontend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pfa-frontend-app
+  template:
+    metadata:
+      labels:
+        app: pfa-frontend-app
+    spec:
+      containers:
+      - name: pfa-frontend-app
+        image: meiezbr/web-application-for-managing-university-clubs-activities_frontend:k8s-minikube
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pfa-frontend-service
+spec:
+  selector:
+    app: pfa-frontend-app
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30002

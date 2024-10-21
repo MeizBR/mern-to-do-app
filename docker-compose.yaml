@@ -17,7 +17,6 @@ services:
       MONGODB_PASSWORD: put-your-own
       GMAIL_USERNAME: put-your-own
       GMAIL_PASSWORD: put-your-own
-      PORT: 8000
       JWT_SECRET: qwertyuiopasdfghjklzxcvbnm123456
     networks:
       - to-do-net
