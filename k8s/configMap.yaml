@@ -3,5 +3,6 @@ kind: ConfigMap
 metadata:
   name: mongodb-configmap
 data:
+  mongo-host: cluster0.pzhkglv.mongodb.net
   mongo-database: mern-to-do-app
   jwt-secret: qwertyuiopasdfghjklzxcvbnm123456
