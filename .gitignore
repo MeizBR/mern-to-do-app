@@ -23,3 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+/terraform/.terraform/
+/terraform/*.tfstate
+/terraform/*.tfstate.backup
